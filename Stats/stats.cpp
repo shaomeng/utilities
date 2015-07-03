@@ -1,10 +1,10 @@
-#ifndef SAMS_MATH
-#include "SamMath.h"
+#ifndef STATS
+#include "stats.h"
 #include <iostream>
 #endif
 
 void 
-Sams_math::GetMinMax( const float *array, float *results, long int n)
+Stats::GetMinMax( const float *array, float *results, long int n)
 {
     float max = array[0];
     float min = array[0];
@@ -17,14 +17,14 @@ Sams_math::GetMinMax( const float *array, float *results, long int n)
 }
 
 float 
-Sams_math::GetRMS( const float *obs, const float *truth, long int n)
+Stats::GetRMS( const float *obs, const float *truth, long int n)
 {
     float sum = GetRMS2( obs, truth, n); 
     return sqrt(sum);
 }
 
 float 
-Sams_math::GetRMS2( const float *obs, const float *truth, long int n)
+Stats::GetRMS2( const float *obs, const float *truth, long int n)
 {
     float sum = 0.0;
     float c = 0.0;
@@ -43,7 +43,7 @@ Sams_math::GetRMS2( const float *obs, const float *truth, long int n)
 
 
 float 
-Sams_math::GetLInfNorm( const float *arr1, const float *arr2, long int n)
+Stats::GetLInfNorm( const float *arr1, const float *arr2, long int n)
 {
     float diff = 0;
     float tmp;
@@ -57,7 +57,7 @@ Sams_math::GetLInfNorm( const float *arr1, const float *arr2, long int n)
 }
 
 float
-Sams_math::GetMean( const float *array, int n ) 
+Stats::GetMean( const float *array, int n ) 
 {
     float sum = 0;
     float c = 0;
@@ -74,7 +74,7 @@ Sams_math::GetMean( const float *array, int n )
 }
 
 float
-Sams_math::GetPositiveMean( const float *array, int n)
+Stats::GetPositiveMean( const float *array, int n)
 {
     float *array2 = new float[n];
     ToPositive( array, array2, n);
@@ -84,7 +84,7 @@ Sams_math::GetPositiveMean( const float *array, int n)
 }
 
 float
-Sams_math::GetNegativeMean( const float *array, int n)
+Stats::GetNegativeMean( const float *array, int n)
 {
     float *array2 = new float[n];
     ToNegative( array, array2, n);
@@ -94,7 +94,7 @@ Sams_math::GetNegativeMean( const float *array, int n)
 }
 
 float
-Sams_math::GetMean( const int *array, int n ) 
+Stats::GetMean( const int *array, int n ) 
 {
     int sum = 0;
     int nonzero = 0;
@@ -107,7 +107,7 @@ Sams_math::GetMean( const int *array, int n )
 }
 
 float
-Sams_math::GetPositiveMean( const int *array, int n )
+Stats::GetPositiveMean( const int *array, int n )
 {
     int *array2 = new int[n];
     ToPositive( array, array2, n );
@@ -117,7 +117,7 @@ Sams_math::GetPositiveMean( const int *array, int n )
 }
 
 float
-Sams_math::GetNegativeMean( const int *array, int n )
+Stats::GetNegativeMean( const int *array, int n )
 {
     int *array2 = new int[n];
     ToNegative( array, array2, n );
@@ -128,7 +128,7 @@ Sams_math::GetNegativeMean( const int *array, int n )
 
 
 float 
-Sams_math::GetSD( const float *array, int n )
+Stats::GetSD( const float *array, int n )
 {
     float mean = GetMean( array, n );
     float sum = 0.0;
@@ -148,7 +148,7 @@ Sams_math::GetSD( const float *array, int n )
 }
 
 float
-Sams_math::GetPositiveSD( const float *array, int n )
+Stats::GetPositiveSD( const float *array, int n )
 {
     float *array2 = new float[n];
     ToPositive( array, array2, n );
@@ -158,7 +158,7 @@ Sams_math::GetPositiveSD( const float *array, int n )
 }
 
 float
-Sams_math::GetNegativeSD( const float *array, int n )
+Stats::GetNegativeSD( const float *array, int n )
 {
     float *array2 = new float[n];
     ToNegative( array, array2, n );
@@ -168,7 +168,7 @@ Sams_math::GetNegativeSD( const float *array, int n )
 }
 
 float 
-Sams_math::GetSD( const int *array, int n )
+Stats::GetSD( const int *array, int n )
 {
     float mean = GetMean( array, n );
     float sum = 0.0;
@@ -188,7 +188,7 @@ Sams_math::GetSD( const int *array, int n )
 }
 
 float
-Sams_math::GetPositiveSD( const int *array, int n)
+Stats::GetPositiveSD( const int *array, int n)
 {
     int *array2 = new int[n];
     ToPositive( array, array2, n );
@@ -198,7 +198,7 @@ Sams_math::GetPositiveSD( const int *array, int n)
 }
 
 float
-Sams_math::GetNegativeSD( const int *array, int n)
+Stats::GetNegativeSD( const int *array, int n)
 {
     int *array2 = new int[n];
     ToNegative( array, array2, n );
@@ -208,7 +208,7 @@ Sams_math::GetNegativeSD( const int *array, int n)
 }
 
 void
-Sams_math::ToPositive( const float *array, float *array2, int n)
+Stats::ToPositive( const float *array, float *array2, int n)
 {
     for( int i = 0; i < n; i++ )
         if( array[i] > 0 )      array2[i] = array[i];
@@ -216,7 +216,7 @@ Sams_math::ToPositive( const float *array, float *array2, int n)
 }
 
 void
-Sams_math::ToNegative( const float *array, float *array2, int n)
+Stats::ToNegative( const float *array, float *array2, int n)
 {
     for( int i = 0; i < n; i++ )
         if( array[i] < 0 )      array2[i] = array[i];
@@ -224,7 +224,7 @@ Sams_math::ToNegative( const float *array, float *array2, int n)
 }
 
 void
-Sams_math::ToPositive( const int *array, int *array2, int n )
+Stats::ToPositive( const int *array, int *array2, int n )
 {
     for( int i = 0; i < n; i++)
         if( array[i] > 0 )      array2[i] = array[i];
@@ -232,7 +232,7 @@ Sams_math::ToPositive( const int *array, int *array2, int n )
 }
 
 void
-Sams_math::ToNegative( const int *array, int *array2, int n )
+Stats::ToNegative( const int *array, int *array2, int n )
 {
     for( int i = 0; i < n; i++)
         if( array[i] < 0 )      array2[i] = array[i];
@@ -240,7 +240,7 @@ Sams_math::ToNegative( const int *array, int *array2, int n )
 }
 
 int
-Sams_math::GetPositiveCount( const float *array, int n)
+Stats::GetPositiveCount( const float *array, int n)
 {
     int count = 0;
     for( int i = 0; i < n; i++ )
@@ -249,7 +249,7 @@ Sams_math::GetPositiveCount( const float *array, int n)
 }
 
 int
-Sams_math::GetNegativeCount( const float *array, int n)
+Stats::GetNegativeCount( const float *array, int n)
 {
     int count = 0;
     for( int i = 0; i < n; i++ )
@@ -258,7 +258,7 @@ Sams_math::GetNegativeCount( const float *array, int n)
 }
 
 int
-Sams_math::GetPositiveCount( const int *array, int n)
+Stats::GetPositiveCount( const int *array, int n)
 {
     int count = 0;
     for( int i = 0; i < n; i++ )
@@ -267,7 +267,7 @@ Sams_math::GetPositiveCount( const int *array, int n)
 }
 
 int
-Sams_math::GetNegativeCount( const int *array, int n)
+Stats::GetNegativeCount( const int *array, int n)
 {
     int count = 0;
     for( int i = 0; i < n; i++ )
@@ -276,7 +276,7 @@ Sams_math::GetNegativeCount( const int *array, int n)
 }
 
 void
-Sams_math::GetBell( const int *array, int n, int *count, float *bell )
+Stats::GetBell( const int *array, int n, int *count, float *bell )
 {
     float mean = GetMean( array, n );
     float SD = GetSD( array, n );
@@ -316,7 +316,7 @@ Sams_math::GetBell( const int *array, int n, int *count, float *bell )
 }
 
 void
-Sams_math::GetIntDistribution( const int *array, int n, int lbound, 
+Stats::GetIntDistribution( const int *array, int n, int lbound, 
                         int hbound, int *count, float *distribution)
 {
     int range = hbound - lbound;

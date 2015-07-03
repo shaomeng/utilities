@@ -1,9 +1,9 @@
-#ifndef SAMS_MATH
-#define SAMS_MATH
+#ifndef STATS
+#define STATS
 
 #include <cmath>
 
-class Sams_math
+class Stats
 {
   public:
     static float GetMean( const float *array, int n);
