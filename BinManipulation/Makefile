@@ -12,5 +12,8 @@ input2bin: Input2Bin.cpp
 print1st10floats: Print1st10Floats.cpp
 	g++ -Wall Print1st10Floats.cpp -o print1st10floats
 
+calcerr: CalcErrTwoBinaries.cpp
+	g++ -Wall CalcErrTwoBinaries.cpp stats.o -o calcerr
+
 clean:
-	rm bin2ascii dec2hex
+	rm bin2ascii dec2hex calcerr input2bin

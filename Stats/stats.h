@@ -6,7 +6,9 @@
 class Stats
 {
   public:
-    static float GetMean( const float *array, int n);
+
+    static double GetMean( const double *array, long int n);
+/*
     static float GetMean( const int   *array, int n);
 
     static float GetPositiveMean( const float *array, int n);
@@ -29,6 +31,13 @@ class Stats
 
     static int GetNegativeCount(   const float *array, int n);
     static int GetNegativeCount(   const int   *array, int n);
+*/
+
+    /*
+     * Takes in an array and the length of it,
+     * calculates and returns the quadratic mean value.
+     */
+     static double GetQuadraticMean( const double* array, long n );
 
     /*
      * Input: float array:
@@ -44,7 +53,7 @@ class Stats
      * Input: observed array, truth array, and the data number n.
      * Output: RMS
      */
-    static float GetRMS( const float *obs, const float *truth, long int n); 
+    static double GetRMSE( const float *obs, const float *truth, long int n); 
 
     /*
      * Calculate the square of Root Mean Square value between 
@@ -52,7 +61,7 @@ class Stats
      * Input: observed array, truth array, and the data number n.
      * Output: RMS
      */
-    static float GetRMS2( const float *obs, const float *truth, long int n); 
+    static double GetRMSE2( const float *obs, const float *truth, long int n); 
 
     /* 
      * Calculate the max difference between two arrays.
@@ -69,22 +78,24 @@ class Stats
             which has a probability more than 0.999999999.
     http://en.wikipedia.org/wiki/Tolerance_interval
     */
-    static void GetBell( const int   *array, int n, int *count, float *bell);
-    static void GetBell( const float *array, int n, int *count, float *bell ) {}
+//    static void GetBell( const int   *array, int n, int *count, float *bell);
+//    static void GetBell( const float *array, int n, int *count, float *bell ) {}
 
     /*
     GetIntDistribution examines range [lbound, hbound)
     The size of count and distribution should be:
     (hbound - lbound + 2)
     */
-    static void GetIntDistribution( const int *array, int n, int lbound, 
-                            int hbound, int *count, float *distribution);
+//    static void GetIntDistribution( const int *array, int n, int lbound, 
+//                            int hbound, int *count, float *distribution);
 
+/*
   protected:
     static void  ToPositive( const float *array, float *array2, int n);
     static void  ToNegative( const float *array, float *array2, int n);
     static void  ToPositive( const int *array, int *array2, int n);
     static void  ToNegative( const int *array, int *array2, int n);
+*/
 };
 
 

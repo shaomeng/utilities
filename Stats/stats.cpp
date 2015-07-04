@@ -16,37 +16,37 @@ Stats::GetMinMax( const float *array, float *results, long int n)
     results[1] = max;
 }
 
-float 
-Stats::GetRMS( const float *obs, const float *truth, long int n)
+double
+Stats::GetRMSE( const float *obs, const float *truth, long int n)
 {
-    float sum = GetRMS2( obs, truth, n); 
+    double sum = GetRMSE2( obs, truth, n); 
     return sqrt(sum);
 }
 
-float 
-Stats::GetRMS2( const float *obs, const float *truth, long int n)
+double
+Stats::GetRMSE2( const float *obs, const float *truth, long int n)
 {
-    float sum = 0.0;
-    float c = 0.0;
-    float diff;
+    double sum = 0.0;
+    double c = 0.0;
+    double diff;
     for( long int i = 0; i < n; i++) {
         diff = (obs[i] - truth[i]) ;
-        float y = diff * diff - c;
-        float t = sum + y;
+        double y = diff * diff - c;
+        double t = sum + y;
         c = t - sum - y;
         sum = t;
     }
     sum /= 1.0*n;
     
-    return sum;
+    return  sum;
 }
 
 
 float 
 Stats::GetLInfNorm( const float *arr1, const float *arr2, long int n)
 {
-    float diff = 0;
-    float tmp;
+    double diff = 0;
+    double tmp;
     for( long int i = 0; i < n; i++) {
         tmp = arr1[i] - arr2[i];
         if( tmp < 0 )       tmp *= -1.0;
@@ -56,23 +56,37 @@ Stats::GetLInfNorm( const float *arr1, const float *arr2, long int n)
     return diff;
 }
 
-float
-Stats::GetMean( const float *array, int n ) 
+double
+Stats::GetQuadraticMean( const double* arr, long n )
 {
-    float sum = 0;
-    float c = 0;
-    int nonzero = 0;
-    for( int i = 0; i < n; i++ )
-        if( array[i] != 0.0 ) {
-            float y = array[i] - c;
-            float t = sum + y;
-            c = t - sum -y;
-            sum = t;
-            nonzero++;
-        }
-    return (sum / (float) nonzero );
+    double sum = 0.0;
+    double c = 0.0;
+    for( long int i = 0; i < n; i++) {
+        double y = arr[i] * arr[i] - c;
+        double t = sum + y;
+        c = t - sum - y;
+        sum = t;
+    }
+    sum /= 1.0*n;
+    return sqrt( sum );
 }
 
+
+double
+Stats::GetMean( const double *array, long int n ) 
+{
+    double sum = 0;
+    double c = 0;
+    for( long i = 0; i < n; i++ ) {
+        double y = array[i] - c;
+        double t = sum + y;
+        c = t - sum -y;
+        sum = t;
+    }
+    return (sum / (double)n );
+}
+
+/*
 float
 Stats::GetPositiveMean( const float *array, int n)
 {
@@ -339,7 +353,7 @@ Stats::GetIntDistribution( const int *array, int n, int lbound,
     for( int i = 0; i < range+2; i++ )
         distribution[i] = (float)count[i] / (float)n;
 }
-
+*/
 
 
 
