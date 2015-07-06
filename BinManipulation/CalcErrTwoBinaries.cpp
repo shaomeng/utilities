@@ -111,7 +111,7 @@ int main( int argc, char* argv[] )
 
     printf( "\t%s: min=%f, max=%f\n", argv[2], min1, max1 );
     printf( "\t%s: min=%f, max=%f\n", argv[3], min2, max2 );
-    printf( "\trmse=%f, L-infy=%f\n", rmse, linfy );
+    printf( "\trmse=%e, L-infy=%e\n", rmse, linfy );
 
     delete[] buf1; 
     delete[] buf2; 
