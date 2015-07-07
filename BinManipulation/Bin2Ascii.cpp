@@ -40,6 +40,7 @@ int main( int argc, char* argv[] )
     }
 
     float* buf = new float[ size ];
+    fseek( readFile, 0, SEEK_SET );
     size_t result = fread( buf, sizeof(float), size, readFile );
     fclose( readFile );
     if( result != size ) {
@@ -53,7 +54,7 @@ int main( int argc, char* argv[] )
         exit(1);
     }
     // %e prints the numbers in decimal scientific notation.
-    for( size_t i = 0; i < size; i++ )
+    for( long i = 0; i < size; i++ )
         fprintf( writeFile, "%e\n", buf[i] );
     fclose( writeFile );
 

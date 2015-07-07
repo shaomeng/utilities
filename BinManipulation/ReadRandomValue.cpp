@@ -1,26 +1,65 @@
-#include <iostream>
-#include <fstream>
+/* 
+ * This program takes user's input of the x, y, and z indices of a point,
+ * and returns the value of that point.
+ *
+ * Programmer: Samuel Li
+ * Date: 7/7/2015
+ *
+ */
 
-#define WIDTH 512
-#define HEIGHT 256
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
 
-int main() {
+/* 
+ * Opens a file to read and returns the length of the file in byte.
+ */
+long int OpenFileRead( FILE* &file, char* filename )
+{
+    file = fopen( filename, "rb" );
+    if( file == NULL ) {
+        cerr << "File open error: " << filename << endl;
+        exit(1);
+    }
+    fseek( file, 0, SEEK_END );
+    long size = ftell( file );
+    fseek( file, 0, SEEK_SET );
+
+    return size;
+}
+
+int main(int argc, char* argv[])
+{
+    if( argc != 5 ) {
+        cerr << "Please input the Filename, XDim, YDim, ZDim." << endl;
+        exit (1);
+    }
+
+    FILE* readFile = NULL;
+    OpenFileRead( readFile, argv[1] );
+    int xDim = atoi( argv[2] );
+    int yDim = atoi( argv[3] );
+    int zDim = atoi( argv[4] );
+    
+    int x, y, z;
+    float val;
     while(true) {
-        cout << "please input X and Y: " << endl;
-        int x, y, idx;
+        cout << "Please input the x, y, and z indices that you want to read: " << endl;
+        cout << "Remember, z=1949 is the secrete to exit!" << endl;
         cin >> x;
         cin >> y;
-        idx = y*WIDTH + x;
-        float result[2];
+        cin >> z;
+        if( z == 1949 )     
+            break;
 
-        FILE* file = fopen( "../outputbin/dg0.vec.bin", "rb" );
-        int offset = idx * sizeof( float );
-        fseek( file, offset, SEEK_SET );
-        fread( (void*) result, sizeof(float), 2, file);
-        fclose (file);
+        long offset = z * xDim * yDim + y * xDim + x;
+        fseek( readFile, sizeof(float) * offset, SEEK_SET );
+        fread( &val, sizeof(float), 1, readFile );
 
-        cout << "velocity read: " << result[0] << "\t" << result[1] << endl; 
+        printf( "vol(%d, %d, %d) = %f\n", x, y, z, val );
     }
+    
+    fclose( readFile );
 }

@@ -9,11 +9,14 @@ dec2hex: Dec2Hex.cpp
 input2bin: Input2Bin.cpp
 	g++ -Wall Input2Bin.cpp -o input2bin
 
-print1st10floats: Print1st10Floats.cpp
-	g++ -Wall Print1st10Floats.cpp -o print1st10floats
+readrandom: ReadRandomValue.cpp
+	g++ -Wall ReadRandomValue.cpp -o readrandom
 
 calcerr: CalcErrTwoBinaries.cpp
 	g++ -Wall CalcErrTwoBinaries.cpp stats.o -o calcerr
+
+cropcube: CropCube.cpp
+	g++ -Wall CropCube.cpp stats.o -o cropcube
 
 clean:
 	rm bin2ascii dec2hex calcerr input2bin

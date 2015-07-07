@@ -22,9 +22,9 @@
 using namespace std;
 
 /* 
- * Opens a file and returns the length of the file in byte.
+ * Opens a file to read and returns the length of the file in byte.
  */
-long int OpenFile( FILE* &file, char* filename )
+long int OpenFileRead( FILE* &file, char* filename )
 {
     file = fopen( filename, "rb" );
     if( file == NULL ) {
@@ -33,15 +33,16 @@ long int OpenFile( FILE* &file, char* filename )
     }
     fseek( file, 0, SEEK_END );
     long size = ftell( file );
+    fseek( file, 0, SEEK_SET );
 
     return size;
 }
 
 /*
- * Read a data plane from the binary file.
+ * Read a data chunk from the binary file.
  * Both offset and count are in the number of floats (not bytes).
  */
-void ReadPlane( FILE* &file, long offset, long count, float* buf )
+void ReadChunk( FILE* &file, long offset, long count, float* buf )
 {
     long rt = fseek( file, sizeof(float) * offset, SEEK_SET );
     if( rt != 0 ){
@@ -64,8 +65,8 @@ int main( int argc, char* argv[] )
 
     FILE* file1 = NULL;
     FILE* file2 = NULL;
-    long size1 = OpenFile( file1, argv[2] );
-    long size2 = OpenFile( file2, argv[3] );
+    long size1 = OpenFileRead( file1, argv[2] );
+    long size2 = OpenFileRead( file2, argv[3] );
     if( size1 != size2 ) {
         cerr << "Input file sizes don't align..." << endl;
         exit(1);
@@ -85,8 +86,8 @@ int main( int argc, char* argv[] )
 
 
     for( int i = 0; i < z; i++ ) {
-        ReadPlane( file1, i * planeSize, planeSize, buf1 );
-        ReadPlane( file2, i * planeSize, planeSize, buf2 );
+        ReadChunk( file1, i * planeSize, planeSize, buf1 );
+        ReadChunk( file2, i * planeSize, planeSize, buf2 );
         Stats::GetMinMax( buf1, minmax1, planeSize );
         Stats::GetMinMax( buf2, minmax2, planeSize );
         if( i == 0 ) {
