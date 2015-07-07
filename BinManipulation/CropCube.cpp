@@ -94,8 +94,6 @@ int main(int argc, char* argv[]) {
         for( long y = 0; y < outDim; y++ ) {
             long offset = z * inDim * inDim + y * inDim;
             ReadChunk( infile, offset, outDim, buf );
-for( int i = 0; i < outDim; i++ )
-    cerr << "\t" << buf[i] << endl;
             WriteChunk( outfile, outDim, buf );
         }
 
