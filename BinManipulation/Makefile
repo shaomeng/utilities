@@ -21,5 +21,8 @@ maxdiff: MaxDiffSorted.cpp
 cropcube: CropCube.cpp
 	g++ -Wall CropCube.cpp stats.o -o cropcube
 
+zeroout: ZeroOutFloats.cpp
+	g++ -Wall ZeroOutFloats.cpp -o zeroout
+
 clean:
 	rm bin2ascii dec2hex calcerr input2bin maxdiff
