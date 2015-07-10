@@ -15,8 +15,11 @@ readrandom: ReadRandomValue.cpp
 calcerr: CalcErrTwoBinaries.cpp
 	g++ -Wall CalcErrTwoBinaries.cpp stats.o -o calcerr
 
+maxdiff: MaxDiffSorted.cpp
+	g++ -Wall MaxDiffSorted.cpp stats.o -o maxdiff
+
 cropcube: CropCube.cpp
 	g++ -Wall CropCube.cpp stats.o -o cropcube
 
 clean:
-	rm bin2ascii dec2hex calcerr input2bin
+	rm bin2ascii dec2hex calcerr input2bin maxdiff
