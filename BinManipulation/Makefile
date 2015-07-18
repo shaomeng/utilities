@@ -24,5 +24,7 @@ cropcube: CropCube.cpp
 zeroout: ZeroOutFloats.cpp
 	g++ -Wall ZeroOutFloats.cpp -o zeroout
 
+cropanysize: CropAnySize.cpp
+	g++ -Wall CropAnySize.cpp -o cropanysize
 clean:
-	rm bin2ascii dec2hex calcerr input2bin maxdiff
+	rm bin2ascii dec2hex calcerr input2bin readrandom calcerr maxdiff cropcube zeroout cropanysize
