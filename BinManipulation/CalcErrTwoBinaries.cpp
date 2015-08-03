@@ -77,7 +77,8 @@ int main( int argc, char* argv[] )
         exit(1);
     }
     long planeSize = size1 / z / 4;
-    float min1, max1, min2, max2;
+    float min1 , max1 , min2 , max2;
+    min1 = max1 = min2 = max2 = 0.0;
     double* rmse_arr   = new double[ z ];   
     float*  linfy_arr = new float[ z ];
     float*  buf1      = new float[ planeSize ];
@@ -92,7 +93,7 @@ int main( int argc, char* argv[] )
         Stats::GetMinMax( buf2, minmax2, planeSize );
         if( i == 0 ) {
             min1 = minmax1[0];      max1 = minmax1[1];
-            min2 = minmax2[0];      max2 = minmax2[2];
+            min2 = minmax2[0];      max2 = minmax2[1];
         }
         else {
             min1 = min( min1, minmax1[0] );

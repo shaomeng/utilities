@@ -13,7 +13,7 @@ readrandom: ReadRandomValue.cpp
 	g++ -Wall ReadRandomValue.cpp -o readrandom
 
 calcerr: CalcErrTwoBinaries.cpp
-	g++ -Wall CalcErrTwoBinaries.cpp stats.o -o calcerr
+	g++ -O2 -Wall CalcErrTwoBinaries.cpp stats.o -o calcerr
 
 maxdiff: MaxDiffSorted.cpp
 	g++ -Wall MaxDiffSorted.cpp stats.o -o maxdiff

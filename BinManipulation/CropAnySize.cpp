@@ -68,11 +68,11 @@ void WriteChunk( FILE* file, long count, float* buf )
 int main(int argc, char* argv[]) {
 
     if( argc != 12 ){
-        cerr << "Usage: InFileName, InFileNX, InFileNY, InFileNZ, \
-                 OutFileName, OutStartX, OutFinishY, \
-                 OutStartY, OutFinishY, OutStartZ, OutFinishZ. " << endl
-                 << "For example, if you want to crop from index 64 \
-                 to index 127 in X dimension, just type 64 and 127!" << endl;
+        cerr << "Usage: InFileName, InFileNX, InFileNY, InFileNZ, "
+             << "OutFileName, OutStartX, OutFinishY, "
+             << "OutStartY, OutFinishY, OutStartZ, OutFinishZ. " << endl
+             << "For example, if you want to crop from index 64 "
+             << "to index 127 in X dimension, just type 64 and 127!" << endl;
         exit (1);
     }
 
