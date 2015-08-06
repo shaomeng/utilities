@@ -16,6 +16,19 @@ Stats::GetMinMax( const float *array, float *results, long int n)
     results[1] = max;
 }
 
+void 
+Stats::GetMinMax( const double *array, double *results, long int n)
+{
+    double max = array[0];
+    double min = array[0];
+    for( long int i = 1; i < n; i++) {
+        if( array[i] > max)     max = array[i];
+        if( array[i] < min)     min = array[i];
+    }
+    results[0] = min;
+    results[1] = max;
+}
+
 double
 Stats::GetRMSE( const float *obs, const float *truth, long int n)
 {
@@ -41,9 +54,40 @@ Stats::GetRMSE2( const float *obs, const float *truth, long int n)
     return  sum;
 }
 
+double
+Stats::GetRMSE2( const double *obs, const double *truth, long int n)
+{
+    double sum = 0.0;
+    double c = 0.0;
+    double diff;
+    for( long int i = 0; i < n; i++) {
+        diff = (obs[i] - truth[i]) ;
+        double y = diff * diff - c;
+        double t = sum + y;
+        c = t - sum - y;
+        sum = t;
+    }
+    sum /= 1.0*n;
+    
+    return  sum;
+}
 
 float 
 Stats::GetLInfNorm( const float *arr1, const float *arr2, long int n)
+{
+    double diff = 0;
+    double tmp;
+    for( long int i = 0; i < n; i++) {
+        tmp = arr1[i] - arr2[i];
+        if( tmp < 0 )       tmp *= -1.0;
+        if( tmp > diff)     diff = tmp; 
+    }
+    
+    return diff;
+}
+
+double 
+Stats::GetLInfNorm( const double *arr1, const double *arr2, long int n)
 {
     double diff = 0;
     double tmp;

@@ -46,6 +46,7 @@ class Stats
        Output: void
      */
     static void GetMinMax( const float *array, float *results, long int n);
+    static void GetMinMax( const double *array, double *results, long int n);
 
     /*
      * Calculate the Root Mean Square value between an observed array
@@ -62,12 +63,14 @@ class Stats
      * Output: RMS
      */
     static double GetRMSE2( const float *obs, const float *truth, long int n); 
+    static double GetRMSE2( const double *obs, const double *truth, long int n); 
 
     /* 
      * Calculate the max difference between two arrays.
      * This is also call the L-Infinity Norm.
      */
     static float GetLInfNorm( const float *arr1, const float *arr2, long int n); 
+    static double GetLInfNorm( const double *arr1, const double *arr2, long int n); 
     
     /*
     Input: data array: array
