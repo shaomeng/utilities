@@ -13,7 +13,7 @@ int main( int argc, char* argv[] )
 {
     cout << "Usage: first, input the name of the binary file you wanna create: " << endl;
     string filename;
-    getline( cin, filename );
+    cin >> filename;
 
     FILE* wFile = fopen( filename.c_str(), "wb" );
     if( wFile == NULL ) {
@@ -22,10 +22,10 @@ int main( int argc, char* argv[] )
     }
     cout << "Second, input the numbers you want to fill into the binary file: " << endl;
     cout << "REMEMBER, 1949 is the magic number that terminates the input. " << endl;
-    float num;
+    double num;
     cin >> num;
     while( num != 1949.0 ) {
-        fwrite( &num, sizeof(float), 1, wFile );
+        fwrite( &num, sizeof(double), 1, wFile );
         cin >> num;
     }
     fclose( wFile );

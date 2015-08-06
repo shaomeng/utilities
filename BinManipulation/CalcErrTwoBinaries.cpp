@@ -9,6 +9,9 @@
  *
  * Programmer: Samuel Li
  * Date: 7/3/2015
+ *
+ * Modified: 8/5/2015
+ *      FLOAT macro defines single or double precision.
  */
 
 
@@ -18,6 +21,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <algorithm>
+
+#define FLOAT double
 
 using namespace std;
 
@@ -40,16 +45,16 @@ long int OpenFileRead( FILE* &file, char* filename )
 
 /*
  * Read a data chunk from the binary file.
- * Both offset and count are in the number of floats (not bytes).
+ * Both offset and count are in the number of FLOATs (not bytes).
  */
-void ReadChunk( FILE* &file, long offset, long count, float* buf )
+void ReadChunk( FILE* &file, long offset, long count, FLOAT* buf )
 {
-    long rt = fseek( file, sizeof(float) * offset, SEEK_SET );
+    long rt = fseek( file, sizeof(FLOAT) * offset, SEEK_SET );
     if( rt != 0 ){
         cerr << "File seek error! " << endl;
         exit(1);
     }
-    rt = fread( buf, sizeof(float), count, file ); 
+    rt = fread( buf, sizeof(FLOAT), count, file ); 
     if( rt != count ) {
         cerr << "File read error! " << endl;
         exit(1);
@@ -76,15 +81,15 @@ int main( int argc, char* argv[] )
         cerr << "Z dimension error!" << endl;
         exit(1);
     }
-    long planeSize = size1 / z / 4;
-    float min1 , max1 , min2 , max2;
+    long planeSize = size1 / z / sizeof(FLOAT);
+    FLOAT min1 , max1 , min2 , max2;
     min1 = max1 = min2 = max2 = 0.0;
     double* rmse_arr   = new double[ z ];   
-    float*  linfy_arr = new float[ z ];
-    float*  buf1      = new float[ planeSize ];
-    float*  buf2      = new float[ planeSize ];
-    float minmax1[2], minmax2[2];
+    double*  linfy_arr = new double[ z ];
+    FLOAT minmax1[2], minmax2[2];
 
+    FLOAT*  buf1      = new FLOAT[ planeSize ];
+    FLOAT*  buf2      = new FLOAT[ planeSize ];
 
     for( int i = 0; i < z; i++ ) {
         ReadChunk( file1, i * planeSize, planeSize, buf1 );
