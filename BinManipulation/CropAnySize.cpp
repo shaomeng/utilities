@@ -5,11 +5,16 @@
  * 
  * Programmer: Samuel Li
  * Date: 7/17/2015
+ *
+ * Modified: add support for double precision numbers.
+ * Date: 8/6/2015
  */
 
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
+
+#define FLOAT double
 
 using namespace std;
 
@@ -34,14 +39,14 @@ long int OpenFileRead( FILE* &file, char* filename )
  * Read a data chunk from the binary file.
  * Both offset and count are in the number of floats (not bytes).
  */
-void ReadChunk( FILE* file, long offset, long count, float* buf )
+void ReadChunk( FILE* file, long offset, long count, FLOAT* buf )
 {
-    long rt = fseek( file, sizeof(float) * offset, SEEK_SET );
+    long rt = fseek( file, sizeof(FLOAT) * offset, SEEK_SET );
     if( rt != 0 ){
         cerr << "File seek error! " << endl;
         exit(1);
     }
-    rt = fread( buf, sizeof(float), count, file );
+    rt = fread( buf, sizeof(FLOAT), count, file );
     if( rt != count ) {
         cerr << "File read error! " << endl;
         exit(1);
@@ -51,14 +56,14 @@ void ReadChunk( FILE* file, long offset, long count, float* buf )
 /*
  * Writes a data chunk into the end of a binary file.
  */
-void WriteChunk( FILE* file, long count, float* buf )
+void WriteChunk( FILE* file, long count, FLOAT* buf )
 {
     long rt = fseek( file, 0, SEEK_END );
     if( rt != 0 ){
         cerr << "File seek error! " << endl;
         exit(1);
     }
-    rt = fwrite( buf, sizeof(float), count, file );
+    rt = fwrite( buf, sizeof(FLOAT), count, file );
     if( rt != count ) {
         cerr << "File write error! " << endl;
         exit(1);
@@ -101,7 +106,7 @@ int main(int argc, char* argv[]) {
 
 
     int outNX = outFinishX - outStartX + 1;
-    float* buf = new float[ outNX ];
+    FLOAT* buf = new FLOAT[ outNX ];
 
     for( int z = outStartZ; z <= outFinishZ; z++ )
         for( int y = outStartY; y <= outFinishY; y++ ) {

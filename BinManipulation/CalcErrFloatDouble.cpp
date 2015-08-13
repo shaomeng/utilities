@@ -10,8 +10,8 @@
  * Programmer: Samuel Li
  * Date: 7/3/2015
  *
- * Modified: 8/5/2015
- *      FLOAT macro defines single or double precision.
+ * Modified: 8/7/2015
+ *      User inputs one float file and one double file.
  */
 
 
@@ -21,8 +21,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <algorithm>
-
-#define FLOAT double
+#include <cassert>
 
 using namespace std;
 
@@ -44,17 +43,40 @@ long int OpenFileRead( FILE* &file, char* filename )
 }
 
 /*
- * Read a data chunk from the binary file.
- * Both offset and count are in the number of FLOATs (not bytes).
+ * Read a chunk of floats from the binary file.
+ * Both offset and count are in the number of values (not bytes).
  */
-void ReadChunk( FILE* &file, long offset, long count, FLOAT* buf )
+void ReadFloatChunk( FILE* &file, long offset, long count, double* buf )
 {
-    long rt = fseek( file, sizeof(FLOAT) * offset, SEEK_SET );
+    long rt = fseek( file, sizeof(float) * offset, SEEK_SET );
     if( rt != 0 ){
         cerr << "File seek error! " << endl;
         exit(1);
     }
-    rt = fread( buf, sizeof(FLOAT), count, file ); 
+    float* floatbuf = new float[count];
+    rt = fread( floatbuf, sizeof(float), count, file ); 
+    if( rt != count ) {
+        cerr << "File read error! " << endl;
+        exit(1);
+    }
+    for( long i = 0; i < count; i++ )
+        buf[i] = floatbuf[i];
+
+    delete[] floatbuf;
+}
+
+/*
+ * Read a chunk of doubles from the binary file.
+ * Both offset and count are in the number of values (not bytes).
+ */
+void ReadDoubleChunk( FILE* &file, long offset, long count, double* buf )
+{
+    long rt = fseek( file, sizeof(double) * offset, SEEK_SET );
+    if( rt != 0 ){
+        cerr << "File seek error! " << endl;
+        exit(1);
+    }
+    rt = fread( buf, sizeof(double), count, file ); 
     if( rt != count ) {
         cerr << "File read error! " << endl;
         exit(1);
@@ -64,39 +86,36 @@ void ReadChunk( FILE* &file, long offset, long count, FLOAT* buf )
 int main( int argc, char* argv[] )
 {
     if( argc != 4 ) {
-        if( sizeof(FLOAT) == 8 )
-            cerr << "\tUsage: DOUBLE_filename1, DOUBLE_filename2, Z_dimension" << endl;
-        else if( sizeof(FLOAT) == 4 )
-            cerr << "\tUsage: FLOAT_filename1, FLOAT_filename2, Z_dimension" << endl;
+        cerr << "\tUsage: float_file, double_file, Z dimension." << endl;
         exit(1);
     }
 
-    FILE* file1 = NULL;
-    FILE* file2 = NULL;
+    FILE* file1 = NULL;     // float file
+    FILE* file2 = NULL;     // double file
     long size1 = OpenFileRead( file1, argv[1] );
     long size2 = OpenFileRead( file2, argv[2] );
-    if( size1 != size2 ) {
+    if( size1 * 2 != size2 ) {
         cerr << "Input file sizes don't align..." << endl;
         exit(1);
     }
     int z = atoi( argv[3] );
-    if( size1 % z != 0 ) {
+    if( size1 % z != 0  || size2 % z != 0) {
         cerr << "Z dimension error!" << endl;
         exit(1);
     }
-    long planeSize = size1 / z / sizeof(FLOAT);
-    FLOAT min1 , max1 , min2 , max2;
+    long planeSize = size1 / z / sizeof(float);
+    double  min1 , max1 , min2 , max2;
     min1 = max1 = min2 = max2 = 0.0;
     double* rmse_arr   = new double[ z ];   
     double*  linfy_arr = new double[ z ];
-    FLOAT minmax1[2], minmax2[2];
+    double minmax1[2], minmax2[2];
 
-    FLOAT*  buf1      = new FLOAT[ planeSize ];
-    FLOAT*  buf2      = new FLOAT[ planeSize ];
+    double*  buf1      = new double[ planeSize ];
+    double*  buf2      = new double[ planeSize ];
 
     for( int i = 0; i < z; i++ ) {
-        ReadChunk( file1, i * planeSize, planeSize, buf1 );
-        ReadChunk( file2, i * planeSize, planeSize, buf2 );
+        ReadFloatChunk( file1, i * planeSize, planeSize, buf1 );
+        ReadDoubleChunk( file2, i * planeSize, planeSize, buf2 );
         Stats::GetMinMax( buf1, minmax1, planeSize );
         Stats::GetMinMax( buf2, minmax2, planeSize );
         if( i == 0 ) {
