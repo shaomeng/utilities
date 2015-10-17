@@ -22,7 +22,7 @@
 #include <cstdlib>
 #include <algorithm>
 
-#define FLOAT double
+#define FLOAT float
 
 using namespace std;
 
@@ -119,8 +119,8 @@ int main( int argc, char* argv[] )
         if( linfy_arr[i] > linfy )      
             linfy = linfy_arr[i];
 
-    printf( "\t%s: min=%e, max=%e\n", argv[2], min1, max1 );
-    printf( "\t%s: min=%e, max=%e\n", argv[3], min2, max2 );
+    printf( "\t%s: min=%e, max=%e\n", argv[1], min1, max1 );
+    printf( "\t%s: min=%e, max=%e\n", argv[2], min2, max2 );
     printf( "\trmse=%e, L-infy=%e\n", rmse, linfy );
 
     delete[] buf1; 

@@ -1,7 +1,7 @@
 all:
 
 stats.o: stats.cpp 
-	g++ -Wall -c stats.cpp -o stats.o
+	g++ -O3 -Wall -c stats.cpp -o stats.o
 
 test: stats.h stats.cpp test.cpp
 	g++ -Wall -c stats.cpp 
