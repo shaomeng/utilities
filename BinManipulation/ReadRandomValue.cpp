@@ -47,16 +47,36 @@ int main(int argc, char* argv[])
     float val;
     while(true) {
         cout << "Please input the x, y, and z indices that you want to read: " << endl;
-        cout << "Remember, z=1949 is the secrete to exit!" << endl;
+        cout << "Remember, x=1949 is the secrete to exit!" << endl;
         cin >> x;
-        cin >> y;
-        cin >> z;
-        if( z == 1949 )     
+        if( x == 1949 )     
             break;
+		while( x >= xDim ) {
+			cout << "X index not valid, re-input: " << endl;
+			cin >> x;
+		}
+        cin >> y;
+		while( y >= xDim ) {
+			cout << "Y index not valid, re-input: " << endl;
+			cin >> y;
+		}
+        cin >> z;
+		while( z >= xDim ) {
+			cout << "Z index not valid, re-input: " << endl;
+			cin >> z;
+		}
 
         long offset = z * xDim * yDim + y * xDim + x;
-        fseek( readFile, sizeof(float) * offset, SEEK_SET );
-        fread( &val, sizeof(float), 1, readFile );
+        int rt = fseek( readFile, sizeof(float) * offset, SEEK_SET );
+		if( rt != 0 ) {
+			cerr << "fseek failed." << endl;
+			break;
+		}
+        rt = fread( &val, sizeof(float), 1, readFile );
+		if( rt != 1 ) {
+			cerr << "fread failed." << endl;
+			break;
+		}
 
         printf( "vol(%d, %d, %d) = %f\n", x, y, z, val );
     }
