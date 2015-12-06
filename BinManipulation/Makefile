@@ -1,37 +1,51 @@
+CC=gcc
+CXX=g++
+CXXFLAGS=-O2 -g -Wall
+
+ARCH=$(shell uname)
+
+ifeq ($(ARCH), Darwin)
+CC=clang
+CXX=clang++
+endif
+
 all:
 
 bin2ascii: Bin2Ascii.cpp
-	g++ -Wall Bin2Ascii.cpp -o bin2ascii
+	$(CXX) $(CXXFLAGS) Bin2Ascii.cpp -o bin2ascii
 
 dec2hex: Dec2Hex.cpp
-	g++ -Wall Dec2Hex.cpp -o dec2hex
+	$(CXX) $(CXXFLAGS) Dec2Hex.cpp -o dec2hex
 
 input2bin: Input2Bin.cpp
-	g++ -Wall Input2Bin.cpp -o input2bin
+	$(CXX) $(CXXFLAGS) Input2Bin.cpp -o input2bin
 
 readrandom: ReadRandomValue.cpp
-	g++ -Wall ReadRandomValue.cpp -o readrandom
+	$(CXX) $(CXXFLAGS) ReadRandomValue.cpp -o readrandom
 
 calcerr: CalcErrTwoBinaries.cpp
-	g++ -O3 -Wall CalcErrTwoBinaries.cpp stats.o -o calcerr
+	$(CXX) $(CXXFLAGS) CalcErrTwoBinaries.cpp stats.o -o calcerr
 
 calcerrfd: CalcErrFloatDouble.cpp
-	g++ -O3 -Wall CalcErrFloatDouble.cpp stats.o -o bin/calcerrfd
+	$(CXX) $(CXXFLAGS) CalcErrFloatDouble.cpp stats.o -o bin/calcerrfd
 
 maxdiff: MaxDiffSorted.cpp
-	g++ -Wall MaxDiffSorted.cpp stats.o -o maxdiff
+	$(CXX) $(CXXFLAGS) MaxDiffSorted.cpp stats.o -o maxdiff
 
 cropcube: CropCube.cpp
-	g++ -Wall CropCube.cpp stats.o -o cropcube
+	$(CXX) $(CXXFLAGS) CropCube.cpp stats.o -o cropcube
 
 zeroout: ZeroOutFloats.cpp
-	g++ -Wall ZeroOutFloats.cpp -o zeroout
+	$(CXX) $(CXXFLAGS) ZeroOutFloats.cpp -o zeroout
 
 cropanysize: CropAnySize.cpp
-	g++ -Wall CropAnySize.cpp -o cropanysize
+	$(CXX) $(CXXFLAGS) CropAnySize.cpp -o cropanysize
 
 double2float: Double2Float.cpp
-	g++ -Wall Double2Float.cpp -o bin/double2float
+	$(CXX) $(CXXFLAGS) Double2Float.cpp -o bin/double2float
+
+generatebin: GenerateBin.cpp
+	$(CXX) $(CXXFLAGS) GenerateBin.cpp -o bin/generate
 
 clean:
 	rm bin2ascii dec2hex calcerr input2bin readrandom calcerr maxdiff cropcube zeroout cropanysize
