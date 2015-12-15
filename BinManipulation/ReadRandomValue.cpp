@@ -56,12 +56,12 @@ int main(int argc, char* argv[])
 			cin >> x;
 		}
         cin >> y;
-		while( y >= xDim ) {
+		while( y >= yDim ) {
 			cout << "Y index not valid, re-input: " << endl;
 			cin >> y;
 		}
         cin >> z;
-		while( z >= xDim ) {
+		while( z >= zDim ) {
 			cout << "Z index not valid, re-input: " << endl;
 			cin >> z;
 		}
